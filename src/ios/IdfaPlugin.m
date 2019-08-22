@@ -16,7 +16,11 @@
             uuid = uuidUserDefaults;
         }
         if (!uuid) {
-            uuid = idfaString;
+            if (adidEnabled) {
+              uuid = idfaString;
+            } else {
+              uuid = [[NSUUID UUID] UUIDString];
+            }
         }
 
         [defaults setObject:uuid forKey:@"uuid"];
