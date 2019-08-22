@@ -10,10 +10,14 @@
         NSString *idfaString = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSString *uuidUserDefaults = [defaults objectForKey:@"uuid"];
-
-        NSString *uuid = [UICKeyChainStore stringForKey:@"uuid"] ||
-                         uuidUserDefaults ||
-                         idfaString;
+        
+        NSString *uuid = [UICKeyChainStore stringForKey:@"uuid"];
+        if (!uuid) {
+            uuid = uuidUserDefaults;
+        }
+        if (!uuid) {
+            uuid = idfaString;
+        }
 
         [defaults setObject:uuid forKey:@"uuid"];
         [defaults synchronize];
