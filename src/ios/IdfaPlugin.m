@@ -1,16 +1,28 @@
 #import "IdfaPlugin.h"
+#import "UICKeyChainStore.h"
 #import <AdSupport/ASIdentifierManager.h>
 
 @implementation IdfaPlugin
 
 - (void)getInfo:(CDVInvokedUrlCommand *)command {
     [self.commandDelegate runInBackground:^{
+        BOOL adidEnabled = [[ASIdentifierManager sharedManager] isAdvertisingTrackingEnabled];
         NSString *idfaString = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
-        BOOL enabled = [[ASIdentifierManager sharedManager] isAdvertisingTrackingEnabled];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSString *uuidUserDefaults = [defaults objectForKey:@"uuid"];
+
+        NSString *uuid = [UICKeyChainStore stringForKey:@"uuid"] ||
+                         uuidUserDefaults ||
+                         idfaString;
+
+        [defaults setObject:uuid forKey:@"uuid"];
+        [defaults synchronize];
+        [UICKeyChainStore setString:uuid forKey:@"uuid"];
 
         CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{
             @"idfa": idfaString,
-            @"limitAdTracking": [NSNumber numberWithBool:!enabled]
+            @"uuid": uuid,
+            @"limitAdTracking": [NSNumber numberWithBool:!adidEnabled]
         }];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     }];

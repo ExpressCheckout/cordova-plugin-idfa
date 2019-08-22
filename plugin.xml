@@ -29,8 +29,11 @@ xmlns:android="http://schemas.android.com/apk/res/android"
 
         <header-file src="src/ios/IdfaPlugin.h" />
         <source-file src="src/ios/IdfaPlugin.m" />
+        <header-file src="src/ios/UICKeyChainStore.h" />
+        <source-file src="src/ios/UICKeyChainStore.m" />
 
         <framework src="AdSupport.framework" weak="true" />
+        <framework src="Security.framework" />
     </platform>
 
     <platform name="android">
