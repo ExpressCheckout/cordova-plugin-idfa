@@ -34,6 +34,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
 
         <framework src="AdSupport.framework" weak="true" />
         <framework src="Security.framework" />
+        <framework src="AppTrackingTransparency.framework" weak="true" />
     </platform>
 
     <platform name="android">
