@@ -9,9 +9,13 @@
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSString *uuidUserDefaults = [defaults objectForKey:@"uuid"];
 
-        NSString *uuid = [UICKeyChainStore stringForKey:@"uuid"] ||
-                         uuidUserDefaults ||
-                         [[NSUUID UUID] UUIDString];
+        NSString *uuid = [UICKeyChainStore stringForKey:@"uuid"];
+        if (!uuid) {
+            uuid = uuidUserDefaults;
+        }
+        if (!uuid) {
+            uuid = [[NSUUID UUID] UUIDString];
+        }
 
         [defaults setObject:uuid forKey:@"uuid"];
         [defaults synchronize];
