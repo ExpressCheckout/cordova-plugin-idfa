@@ -22,7 +22,7 @@
         [UICKeyChainStore setString:uuid forKey:@"uuid"];
 
         NSDictionary* resultData = @{
-            @"idfa": uuid,
+            @"uuid": uuid,
         };
 
         CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:resultData];
