@@ -21,7 +21,7 @@ public class IdfaPlugin extends ReflectiveCordovaPlugin {
 
         JSONObject result = new JSONObject();
         result.put("aaid", info.getId());
-        result.put("trackingLimited", info.isLimitAdTrackingEnabled());
+        result.put("limitAdTracking", info.isLimitAdTrackingEnabled());
         callbackContext.success(result);
     }
 }
