@@ -21,10 +21,6 @@
         [defaults synchronize];
         [UICKeyChainStore setString:uuid forKey:@"uuid"];
 
-        NSDictionary* resultData = @{
-            @"uuid": uuid,
-        };
-
         CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{
             @"uuid": uuid
         }];
